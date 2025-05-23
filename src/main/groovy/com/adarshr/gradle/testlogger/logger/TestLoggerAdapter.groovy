@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap
 @CompileStatic
 class TestLoggerAdapter implements TestLogger {
 
+    public final String LOG_TEST_DESCRIPITON_PREFIX = 'g-t-l-p-d->'
     protected final Theme theme
     protected final ConsoleLogger logger
     protected final OutputCollector outputCollector
@@ -88,8 +89,12 @@ class TestLoggerAdapter implements TestLogger {
 
     @Override
     void onOutput(TestDescriptor descriptor, TestOutputEvent outputEvent) {
-        if (testLoggerExtension.showStandardStreams) {
-            outputCollector.collect(checkAndWrap(descriptor), outputEvent.message)
+        if (outputEvent.message.startsWith(LOG_TEST_DESCRIPITON_PREFIX)) {
+            checkAndWrap(descriptor).displayNameSuffix = outputEvent.message.substring(LOG_TEST_DESCRIPITON_PREFIX.size())
+        } else {
+            if (testLoggerExtension.showStandardStreams) {
+                outputCollector.collect(checkAndWrap(descriptor), outputEvent.message)
+            }
         }
     }
 

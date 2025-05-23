@@ -151,13 +151,13 @@ class TestLoggerPluginSpec extends AbstractFunctionalSpec {
             lines[1] == render('[erase-ahead,bold]com.adarshr.test.FirstTest[/]')
             lines[2] == render('')
             lines[3] == render('[erase-ahead,bold]  Test [bold-off]thisTestShouldBeSkipped()[yellow] SKIPPED[/]')
-            lines[4] == render('[erase-ahead,bold]  Test [bold-off]this test should fail[red] FAILED[red]')
+            lines[4] == render('[erase-ahead,bold]  Test [bold-off]this test should fail [TraceID: 4bf92f3577b34da6a3] Before all: 2s, Before each: 315ms, Full time: 3.5s[red] FAILED[red]')
             lines[5..8].join('\n') == render(
                 '''|
                    |  org.opentest4j.AssertionFailedError: expected: <1> but was: <2>
-                   |      at com.adarshr.test.FirstTest.thisTestShouldFail(FirstTest.java:18)
+                   |      at com.adarshr.test.FirstTest.thisTestShouldFail(FirstTest.java:34)
                    |[/]'''.stripMargin())
-            lines[9] == render('[erase-ahead,bold]  Test [bold-off]thisTestShouldPass()[green] PASSED[/]')
+            lines[9] == render('[erase-ahead,bold]  Test [bold-off]thisTestShouldPass() [TraceID: 4bf92f3577b34da6a3] Before all: 2s, Before each: 315ms, Full time: 3.5s[green] PASSED[/]')
         and:
             result.task(":test").outcome == FAILED
     }

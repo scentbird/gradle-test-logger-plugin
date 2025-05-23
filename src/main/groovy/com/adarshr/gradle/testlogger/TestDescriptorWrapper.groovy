@@ -17,6 +17,8 @@ class TestDescriptorWrapper {
     final int depth
     final String trail
 
+    String displayNameSuffix = ""
+
     TestDescriptorWrapper(TestDescriptor testDescriptor, TestLoggerExtension testLoggerExtension, List<TestDescriptorWrapper> ancestors) {
         this.testDescriptor = testDescriptor
         this.testLoggerExtension = testLoggerExtension
@@ -39,7 +41,7 @@ class TestDescriptorWrapper {
             return escape(testDescriptor.className)
         }
 
-        escape(testDescriptor.displayName)
+        escape(testDescriptor.displayName + displayNameSuffix)
     }
 
     private String getSimpleClassName() {
